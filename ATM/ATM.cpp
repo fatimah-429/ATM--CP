@@ -60,9 +60,10 @@ public: //functions
 		else
 		{
 			balance = amount + balance;
-			return true;
+			
 
 			cout << "deposited amount: " << amount << endl << "New Balance is now : " << balance << endl;
+			return true;
 		}
 	}
 	bool withdraw(double amount) //withdrawal
