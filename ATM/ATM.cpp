@@ -1,29 +1,29 @@
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <conio.h>
+#include <fstream> //file handling
+#include <conio.h> //getch
 using namespace std;
 
 class Bank_Account
 {
-private: //data at backend
+private: //variables stored
 	int accnum;
 	string ownername;
 	double balance;
 	int pin;
 
 public: //functions
-	void saveToFile(ofstream& outFile) {
+	void saveToFile(ofstream& outFile) { //data into file
 		outFile << ownername << endl;
 		outFile << balance << endl;
 	}
 
-	void loadFromFile(ifstream& inFile) {
+	void loadFromFile(ifstream& inFile) { //data from file
 		inFile >> ownername >> balance;
 	}
 
 	void logTransaction(string type, double amount) {
-		ofstream logFile("transactions.csv", ios::app);
+		ofstream logFile("transactions.csv", ios::app); //data to file without removing previous logs - append function
 		logFile 
 			<< ownername << ","
 			<<accnum<<","
@@ -33,7 +33,7 @@ public: //functions
 		logFile.close();
 	}
 
-	Bank_Account(int num, string name, double s_balance, int userpin) //assigns values to variables - constructor 
+	Bank_Account(int num, string name, double s_balance, int userpin) //assigns values to variables upon entering into program - constructor 
 	{
 		ownername = name;
 		balance = s_balance;
@@ -69,7 +69,7 @@ public: //functions
 	}
 	bool withdraw(double amount) //withdrawal
 	{
-		if (amount>balance)
+		if (amount>balance) //to account for overdrafting
 		{
 			cout << "insufficent funds" << endl;
 			return false;
@@ -84,10 +84,10 @@ public: //functions
 		cout << "You withdrew amount :" << amount << endl << "Your remaining Balance is :" << balance << endl;
 		return true;
 	}
-	string getname() {
+	string getname() { //getter for owneer name
 		return ownername;
 	}
-	int accnumber() {
+	int accnumber() { //getter for ccount number
 		return accnum;
 	}
 	
@@ -106,8 +106,8 @@ private:
 
 
 
-	};
-	int findaccount(int num) {
+	}; //array for objects of Bank_Account class
+	int findaccount(int num) { //comparison with account number to find account
 		int f = 0;
 		int i = 0;
 		while (i < 3)
@@ -122,19 +122,19 @@ private:
 		return f;
 
 	}
-
+//privacy - for masking
 	int masking(int pin) {
 		bool flag = true;
 		int x = 0;
 		int i = 0;
-		while (flag && i < 4) {
-			int ch = _getch();
-			if (ch <= '9' && ch >= '0') {
+		while (flag && i < 4) { //only 4 number pins
+			int ch = _getch(); //getch gives characters 
+			if (ch <= '9' && ch >= '0') { //limits between 9 and o
 				cout << "*";
-				x = x * 10 + (ch - '0');
+				x = x * 10 + (ch - '0'); //converting into integer
 				i++;
 			}
-			if (ch == 13) {
+			if (ch == 13) { //exits loop at enter
 				flag = false;
 			}
 
@@ -142,7 +142,7 @@ private:
 		cout << endl;
 		return x;
 	}
-
+// to print receipt, only store the last line of the respective name
 	void receipt(int i) {
 		ifstream inFile("transactions.csv");
 		string line;
@@ -156,7 +156,7 @@ private:
 		}
 		cout << last <<endl;
 		inFile.close();
-	}
+	}//to print statement, loops through all the lines that macth the respective name and displayes them
 	void statement(int i) {
 		ifstream inFile("transactions.csv");
 		string line;
@@ -170,9 +170,9 @@ private:
 
 
 public:
-	
+//methods
 
-	void saveAccounts() {
+	void saveAccounts() { //save infromation to accouts
 		ofstream outFile("accounts.txt");
 		for (int i = 0; i < 3; i++) {
 			accounts[i].saveToFile(outFile);
@@ -180,7 +180,7 @@ public:
 		outFile.close();
 	}
 
-	void loadAccounts() {
+	void loadAccounts() { //taking information from the file
 		ifstream inFile("accounts.txt");
 		if (!inFile) return;
 		for (int i = 0; i < 3; i++) {
@@ -190,7 +190,7 @@ public:
 	}
 	
 
-	void run() {
+	void run() { //main interface code, runs the menu
 		loadAccounts();
 		int option;
 		int enteredPin = 0;  //taking in PIN
@@ -200,7 +200,7 @@ public:
 		cout << "Enter your account number:" << endl;
 		cin >> accnum;
 		index = findaccount(accnum);
-		if (index < 0 || index > 2) //checking for account
+		if (index < 0 || index > 2) //checking for account in the presaved array
 		{
 			cout << "Account not registered." << endl;
 			return;
@@ -231,7 +231,7 @@ public:
 				break;
 			}
 		}
-		if (check == 3)
+		if (check == 3) // 3 tries
 		{
 			cout << " Your card has been blocked. Contact the bank for queries" << endl;
 			return;
