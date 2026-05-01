@@ -12,7 +12,7 @@ private: //variables stored
 	double balance;
 	int pin;
 
-public: //functions
+public: //methods
 	void saveToFile(ofstream& outFile) { //data into file
 		outFile << ownername << endl;
 		outFile << balance << endl;
@@ -69,13 +69,13 @@ public: //functions
 	}
 	bool withdraw(double amount) //withdrawal
 	{
-		if (amount>balance) //to account for overdrafting
+		if (amount>balance) // for overdrafting
 		{
 			cout << "insufficent funds" << endl;
 			return false;
 		}
 		
-		if (amount <= 0)
+		if (amount <= 0) //ampunt less than 0 not credible
 			{
 				cout << " Invalid amount" << endl;
 				return false;
@@ -84,10 +84,10 @@ public: //functions
 		cout << "You withdrew amount :" << amount << endl << "Your remaining Balance is :" << balance << endl;
 		return true;
 	}
-	string getname() { //getter for owneer name
+	string getname() { //getter for owner name
 		return ownername;
 	}
-	int accnumber() { //getter for ccount number
+	int accnumber() { //getter for account number
 		return accnum;
 	}
 	
@@ -95,7 +95,7 @@ public: //functions
 
 
 };
-class ATM
+class ATM //class for ATM interface
 {
 private:
 
@@ -122,7 +122,7 @@ private:
 		return f;
 
 	}
-//privacy - for masking
+//masking - for privacy
 	int masking(int pin) {
 		bool flag = true;
 		int x = 0;
@@ -134,7 +134,7 @@ private:
 				x = x * 10 + (ch - '0'); //converting into integer
 				i++;
 			}
-			if (ch == 13) { //exits loop at enter
+			if (ch == 13) { //exits loop at enter - 13 ASCII for enter
 				flag = false;
 			}
 
@@ -156,7 +156,7 @@ private:
 		}
 		cout << last <<endl;
 		inFile.close();
-	}//to print statement, loops through all the lines that macth the respective name and displayes them
+	}//to print statement, loops through all the lines that match the respective name and displayes them
 	void statement(int i) {
 		ifstream inFile("transactions.csv");
 		string line;
@@ -172,7 +172,7 @@ private:
 public:
 //methods
 
-	void saveAccounts() { //save infromation to accouts
+	void saveAccounts() { //save information to accounts
 		ofstream outFile("accounts.txt");
 		for (int i = 0; i < 3; i++) {
 			accounts[i].saveToFile(outFile);
@@ -208,10 +208,10 @@ public:
 
 		cout << "Enter Your Pin: " << endl;
 
-		while (check < 3)
+		while (check < 3) // loop runs thrice only
 		{
 			enteredPin = masking(enteredPin);
-			if (!enteredPin)
+			if (!enteredPin) // does not allow unknown or empty pin
 			{
 				cout << "Invalid Pin, Try again" << endl;
 				return;
@@ -231,13 +231,13 @@ public:
 				break;
 			}
 		}
-		if (check == 3) // 3 tries
+		if (check == 3) // blocks more attempts
 		{
 			cout << " Your card has been blocked. Contact the bank for queries" << endl;
 			return;
 		}
 
-		while (true)
+		while (true) //runs menu if Access is granted
 		{
 			cout << "--MENU--" << endl;
 			cout << "choose your option: " << endl
