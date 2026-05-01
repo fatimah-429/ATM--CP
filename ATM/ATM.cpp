@@ -24,8 +24,9 @@ public: //functions
 
 	void logTransaction(string type, double amount) {
 		ofstream logFile("transactions.csv", ios::app);
-		logFile <<accnum<<","
+		logFile 
 			<< ownername << ","
+			<<accnum<<","
 			<< type << ","
 			<< amount << ","
 			<< balance << endl;
