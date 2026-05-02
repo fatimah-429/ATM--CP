@@ -75,7 +75,7 @@ public: //methods
 			return false;
 		}
 		
-		if (amount <= 0) //ampunt less than 0 not credible
+		if (amount <= 0) //amount less than 0 not credible
 			{
 				cout << " Invalid amount" << endl;
 				return false;
